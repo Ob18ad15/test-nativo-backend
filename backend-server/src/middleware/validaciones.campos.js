@@ -1,3 +1,8 @@
+/**
+ Verificar campo se complementa para validar si la variable  de errores  en el metodo check estan vacias,
+ puede continuar el proceso... sino se detiene la ejecución. Ver archivo de rutas en la funcion de 
+ crear task
+ */
 const { validationResult } = require ('express-validator')
 
 const verificarCampos = (req, res, next) => {

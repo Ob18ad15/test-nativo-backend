@@ -2,10 +2,11 @@
 //Importamos el modelo de la tareas
 const Task = require('../models/task.models');
 
-const getTasks = (req, res) => {
+const getTasks = async (req, res) => {
   try {
+    task = await Task.find()
     return res.json({
-      mensaje: 'listado de todas las tarea'
+      mensaje: task
     });
 
   } catch (error) {
@@ -18,9 +19,8 @@ const getTasks = (req, res) => {
 
 const createTasks = async (req, res) => {
   try {
-
     // validar si el titulo es unico
-    const { titulo, descripcion, creador } = req.body;
+    const { titulo } = req.body;
     const existeTitulo = await Task.findOne({ titulo })
 
     if (existeTitulo) {
@@ -45,7 +45,58 @@ const createTasks = async (req, res) => {
   }
 }
 
+const updateTask = async (req, res) => {
+  try {
+    // leer el valor recibido en la url de la peticion
+    const _id = req.params.id;
+
+    // Busca en la BD la tarea por  el uid recibido
+    const taskInDB = await Task.findById({ _id })
+    // validar que la tarea que  exista en la BD
+    if (!taskInDB) {
+      return res.status(404).json({
+        error: 'el id de la tarea no existe en la BD'
+      })
+
+    }
+
+    // Recibimos los valores de la petición
+    const campos = req.body;
+    // ejecutamos la actualización pasando el uid para actualizar el registro
+    const tareaToUpdate = await Task.findByIdAndUpdate(_id, campos)
+    res.json({
+      mensaje: 'Tarea actualizada exitosamente',
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      mensaje: 'Ocurrió un error al actualizar... validar logs',
+      error
+    })
+  }
+}
+
+// Obtener tarea por su id
+
+const getTaskID = async(req, res) => {
+  try {
+
+    const _id = req.params.id;
+    const taskDB = await Task.findOne({_id})
+    return res.json(taskDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'Ocurrió un error al consultar la tarea por ID',
+      error
+    })
+  }
+
+}
+
 module.exports = {
   getTasks,
   createTasks,
+  updateTask,
+  getTaskID
 }

@@ -1,5 +1,6 @@
 const { Router } = require ('express');
-const { getTasks, createTasks } = require ('../controllers/task.controller');
+const { getTasks, createTasks, updateTask, getTaskID  } = require ('../controllers/task.controller');
+// Importamos midelware que valida los valores recibidos de un request
 const { verificarCampos } = require ('../middleware/validaciones.campos')
 
 // importar paquete para crear validacioines de la data o campos recibida en las peticiones
@@ -12,14 +13,26 @@ const router = Router();
 //listar
 router.get('/', getTasks );
 
+router.get('/:id', getTaskID);
+
 // crear nueva tarea
 router.post('/', 
 [
     check('titulo', 'El titulo es obligatorio').not().isEmpty(),
     check('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
-    check('creador', 'El titulo es obligatorio').not().isEmpty(),
+    check('creador', 'El nombre del creador es obligatorio').not().isEmpty(),
     verificarCampos
 ],createTasks );
+
+// Actualizar Tareas
+router.put('/:id',
+[
+    check('titulo', 'El titulo es obligatorio').not().isEmpty(),
+    check('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
+    check('creador', 'El nombre del creador es obligatorio').not().isEmpty(),
+    verificarCampos
+],
+ updateTask)
 
 
 
