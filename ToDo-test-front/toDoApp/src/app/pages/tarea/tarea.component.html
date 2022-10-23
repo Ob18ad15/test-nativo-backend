@@ -1,0 +1,61 @@
+<h2>Listado de tareas</h2>
+
+<hr>
+
+<div class="row text-right">
+    <div class="col">
+      <button routerLink="/tareas" class="btn btn-primary">
+       <i class="fa fa-arrow-left"></i> Regresar
+      </button>
+    </div>
+</div>
+<!-- CRear Formulario-->
+
+<div class="row mt-4">
+    <!-- CReferencia del  Formulario-->
+   <form (ngSubmit)="notificar( f )" #f="ngForm">
+       
+    <div class="form-group mt-2">
+       <label>Titulo</label>
+       <input type="text" name="titulo" [(ngModel)]="tarea.titulo" class="form-control" placeholder="Titulo de la tarea" required>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Creador</label>
+        <input type="text" name="creador" [(ngModel)]="tarea.creador" class="form-control" placeholder="Titulo de la tarea" required>
+     </div>
+
+     <div class="form-group mt-2">
+      <label>Descripción</label>
+      <input type="text" name="descripcion" [(ngModel)]="tarea.descripcion" class="form-control" placeholder="Titulo de la tarea" required>
+   </div>
+
+     <div class="form-group mt-2">
+        <label>Estado</label>
+       
+        <select name="estado" [(ngModel)]="tarea.estado" class="form-select" aria-label="Default select example">
+
+          <option value=false >abierta</option> 
+          
+            <option value=true>Cerrada</option>
+        
+          </select>
+     </div>
+
+     
+
+<div class="form-group text-center mt-5">
+    <div class="col">
+      <button type="submit" class="btn btn-primary w-25">
+       <i class="fa fa-save"></i> Guardar
+      </button>
+    </div>
+</div>
+
+
+   </form>
+</div>
+
+<!--Agregar bottom  para enviar la informacion-->
+
+

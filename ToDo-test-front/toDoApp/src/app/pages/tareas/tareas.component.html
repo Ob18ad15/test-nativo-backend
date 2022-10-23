@@ -1,0 +1,62 @@
+<h2>Listado de tareas</h2>
+
+<hr>
+
+<div class="row text-right">
+    <div class="col ">
+      <button routerLink="/tarea/nuevo" class="btn btn-primary">
+       <i class="fa fa-plus"></i> Agregar
+      </button>
+    </div>
+</div>
+
+<table *ngIf="!cargando && tareas.length > 0" class="table mt-4">
+    <thead>
+      <tr>        
+        <th scope="col">Titulo</th>
+        <th scope="col">Creador</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">estado</th>
+        <th scope="col">Operaciones</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let tarea of tareas; let i = index">
+        
+        <td>{{ tarea.titulo }}</td>
+        <td>{{ tarea.creador}}</td>
+        <td>{{ tarea.descripcion}}</td>
+        <td>
+          <label *ngIf="tarea.estado" class="text-success"> Terminada </label>
+          <label *ngIf="!tarea.estado" class="text-warning"> Pendiente  </label>
+        </td>
+        <td>
+           <button class="btn btn-info mr-1"
+            [routerLink]="['/tarea', tarea._id]">
+            <i class="fa fa-pen"></i>
+           </button>
+        </td>
+        
+      </tr> 
+      
+    </tbody>
+  </table>
+
+  <div *ngIf="cargando" 
+    class="alert alert-info text-center mt-3">
+    <h4 class="alert-heading"> Cargando </h4>
+    <p>
+        <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">
+        Espere por favor
+    </p>
+  </div>
+
+  <div *ngIf="!cargando && tareas.length === 0" class="alert alert-warning text-center mt-3">
+    <h4 class="alert-heading"> No hay registros </h4>
+    <p>
+        <i class="fa fa-exclamation-circle fa-2x"></i>
+    </p>
+  
+  </div>
