@@ -29,12 +29,20 @@ const createTasks = async (req, res) => {
       })
     }
 
-    const task = new Task(req.body);
+       // Recibimos los valores de la petición y solo tomamos campos validos por si se envia campos adicionales
+       const body = {
+        titulo: req.body.titulo,
+        descripcion: req.body.descripcion,
+        creador: req.body.creador,
+        estado: req.body.estado,
+      }
+
+    const task = new Task(body);
     await task.save();
 
     return res.json({
       mensaje: task
-    });
+    });  
 
   } catch (error) {
     console.log(error);
@@ -61,9 +69,14 @@ const updateTask = async (req, res) => {
     }
 
     // Recibimos los valores de la petición
-    const campos = req.body;
+    const body = {
+      titulo: req.body.titulo,
+      descripcion: req.body.descripcion,
+      creador: req.body.creador,
+      estado: req.body.estado,
+    }
     // ejecutamos la actualización pasando el uid para actualizar el registro
-    const tareaToUpdate = await Task.findByIdAndUpdate(_id, campos)
+    const tareaToUpdate = await Task.findByIdAndUpdate(_id, body)
     res.json({
       mensaje: 'Tarea actualizada exitosamente',
     })
